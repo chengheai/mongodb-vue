@@ -6,7 +6,7 @@
       <img :src="item" alt="" class="imgClass">
                 </el-carousel-item>
   </el-carousel>
-  <p class="heroName">{{name}}●{{flag}}</p>
+  <p class="heroName">{{name}} ● {{flag}}</p>
 
   <div>{{explain}}</div>
 
@@ -18,7 +18,6 @@ export default {
   name: "detail",
   data: function () {
     return {
-      title: "欢迎来到得来联盟",
       imgArr: [],
       name: "",
       flag: "",

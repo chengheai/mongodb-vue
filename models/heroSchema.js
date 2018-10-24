@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const heroSchema = mongoose.Schema({
   name :String,
-  age : String,
+  nickname : String,
   sex : String,
   address : String,
   dowhat : String,

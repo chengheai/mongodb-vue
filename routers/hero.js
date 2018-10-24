@@ -48,7 +48,7 @@ router.put("/hero/:id", (req, res) => {
     {
       $set: {
         name: req.body.name,
-        age: req.body.age,
+        nickname: req.body.nickname,
         sex: req.body.sex,
         address: req.body.address,
         dowhat: req.body.dowhat,

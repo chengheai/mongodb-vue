@@ -1,42 +1,58 @@
 <template lang="html">
 <div class="list">
-  <el-table :data="tableData" stripe element-loading-text="拼命加载中" header-row-class-name="tableHeader" v-loading.fullscreen.lock="loading" empty-text="亲，暂时没有数据哦" border style="width: 100%">
-    <el-table-column fixed prop="name" label="英雄" align="center" width="120">
+  <el-row class='table-handle'>
+    <el-button type="primary" class="addBtn" @click="add" icon="el-icon-plus">添加</el-button>
+  </el-row>  
+  <el-table :data="tableData" stripe element-loading-text="拼命加载中" header-row-class-name="tableHeader" v-loading.fullscreen.lock="loading" empty-text="亲，暂时没有数据哦" style="width: 100%">
+    <el-table-column fixed prop="nickname" label="英雄" align="center">
     </el-table-column>
-    <el-table-column prop="age" label="年龄" align="center" width="100">
+    <el-table-column prop="name" label="名字" align="center">
     </el-table-column>
-    <el-table-column label="性别" align="center" width="100">
+    <el-table-column label="性别" align="center">
       <template slot-scope="scope">
         {{jungleSex(scope.row.sex)}}
       </template>
     </el-table-column>
-    <el-table-column prop="address" label="籍贯" align="center" width="150">
+    <el-table-column prop="address" label="籍贯" align="center">
     </el-table-column>
 
-    <el-table-column prop="dowhat" label="位置" align="center" width="150">
+    <el-table-column prop="dowhat" label="位置" align="center">
     </el-table-column>
-    <el-table-column prop="favourite" label="台词" align="center" width="301">
+    <el-table-column prop="favourite" label="台词" align="center">
     </el-table-column>
-    <el-table-column label="操作" align="center" width="360">
+    <el-table-column label="操作" align="center" width=400>
       <template slot-scope="scope">
-        <el-button size="small" type="primary" @click="toDetail(scope.row['_id'])">详情</el-button>
-        <el-button size="small" type="success" @click="modify(scope.row)">修改</el-button>
-        <el-button type="danger" size="small" @click="deleteDate(scope.row['_id'])">删除</el-button>
-        <el-button type="warning" size="small" @click="addPic(scope.row['_id'])">添加图片</el-button>
+        <el-row>
+          <el-button size="small" type="primary" @click="toDetail(scope.row['_id'])">详情</el-button>
+          <el-button size="small" type="success" @click="modify(scope.row)">修改</el-button>
+          <el-button type="danger" size="small" @click="deleteDate(scope.row['_id'])">删除</el-button>
+          <el-button type="warning" size="small" @click="addPic(scope.row['_id'])">添加图片</el-button>
+        </el-row>
       </template>
     </el-table-column>
   </el-table>
+  <el-pagination
+    v-if="tableData.length > 0"
+    class='my-pagination'
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+    :current-page="currentPage4"
+    :page-sizes="[10, 20, 30, 40]"
+    :page-size="100"
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="400">
+  </el-pagination>
 
   <!-- 新增数据 -->
   <el-dialog title="新增数据" :visible.sync="addFormVisible" class="addArea" modal custom-class="addFormArea" @close="closeAdd">
     <el-form :model="addForm" class="addForm">
 
-      <el-form-item label="英雄" :label-width="formLabelWidth">
+      <el-form-item label="名字" :label-width="formLabelWidth">
         <el-input v-model="addForm.name" auto-complete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="年龄" :label-width="formLabelWidth">
-        <el-input v-model="addForm.age" auto-complete="off"></el-input>
+      <el-form-item label="英雄" :label-width="formLabelWidth">
+        <el-input v-model="addForm.nickname" auto-complete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="性别" :label-width="formLabelWidth">
@@ -73,12 +89,12 @@
   <el-dialog title="修改数据" :visible.sync="modifyFormVisible" class="addArea" modal custom-class="addFormArea">
     <el-form :model="modifyForm" class="addForm">
 
-      <el-form-item label="英雄" :label-width="formLabelWidth">
+      <el-form-item label="名字" :label-width="formLabelWidth">
         <el-input v-model="modifyForm.name" auto-complete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="年龄" :label-width="formLabelWidth">
-        <el-input v-model="modifyForm.age" auto-complete="off"></el-input>
+      <el-form-item label="英雄" :label-width="formLabelWidth">
+        <el-input v-model="modifyForm.nickname" auto-complete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="性别" :label-width="formLabelWidth">
@@ -124,8 +140,6 @@
     </div>
   </el-dialog>
 
-  <el-button type="primary" class="addBtn" @click="add" icon="el-icon-plus">添加</el-button>
-
 </div>
 </template>
 
@@ -134,7 +148,6 @@ export default {
   name: "list",
   data: function () {
     return {
-      title: "hello world",
       tableData: [],
       addFormVisible: false,
       modifyFormVisible: false,
@@ -146,7 +159,7 @@ export default {
       },
       addForm: {
         name: "",
-        age: "",
+        nickname: "",
         sex: "",
         address: "",
         dowhat: "",
@@ -155,18 +168,26 @@ export default {
       },
       modifyForm: {
         name: "",
-        age: "",
+        nickname: "",
         sex: "",
         address: "",
         dowhat: "",
         favourite: "",
-        explain: ""
+        explain: "",
+        update_at:Date.now
       },
       formLabelWidth: "120px",
-      loading: false
+      loading: false,
+      currentPage4: 1
     };
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     jungleSex: function (sex) {
       if (sex == "man") {
         return "汉子";
@@ -186,6 +207,7 @@ export default {
       //调新增接口,在回调函数中刷新一次
 
       var addObj = this.addForm;
+      console.log(addObj)
 
       this.$http.post("/api/hero", addObj).then(
         function (response) {
@@ -207,7 +229,7 @@ export default {
     // 关闭dialog的函数
     closeAdd: function () {
       this.addForm.name = "";
-      this.addForm.age = "";
+      this.addForm.nickname = "";
       this.addForm.sex = "";
       this.addForm.address = "";
       this.addForm.dowhat = "";
@@ -357,15 +379,20 @@ export default {
 .tableHeader {
   color: #000;
 }
-
+.my-pagination{
+  text-align: center;
+}
+.table-handle{
+  display: flex;
+  justify-content: flex-end;
+}
 div.list {
-  width: 90%;
+  width: 92%;
   margin: 0 auto;
 }
 
 .addBtn {
-  margin: 50px auto 0;
-  display: block;
+  margin-bottom: 10px;
 }
 
 .addArea .el-input {
