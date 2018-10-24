@@ -1,13 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <h3 class="title">{{title}}</h3>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+
 export default {
-  name: 'App'
+  name: 'App',
+  data:function(){
+    return {
+      title: "LOL英雄"
+    }
+  }
 }
 </script>
 
@@ -16,8 +23,11 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.title{
+  margin-bottom: 50px;
+  text-align: center;
 }
 </style>
