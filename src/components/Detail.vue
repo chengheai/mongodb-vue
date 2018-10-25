@@ -44,6 +44,7 @@ export default {
     }
   },
   mounted: function () {
+    console.log(this.$route)
     this.getMessage(this.$route.params.name);
   }
 };

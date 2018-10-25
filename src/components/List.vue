@@ -36,11 +36,11 @@
     class='my-pagination'
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
-    :current-page="currentPage4"
-    :page-sizes="[10, 20, 30, 40]"
-    :page-size="100"
+    :current-page="currentPage"
+    :page-sizes="pageSizes"
+    :page-size="pageSize"
     layout="total, sizes, prev, pager, next, jumper"
-    :total="400">
+    :total="dataTotal">
   </el-pagination>
 
   <!-- 新增数据 -->
@@ -144,6 +144,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "list",
   data: function () {
@@ -178,7 +179,10 @@ export default {
       },
       formLabelWidth: "120px",
       loading: false,
-      currentPage4: 1
+      currentPage: 1,
+      dataTotal: 0,
+      pageSize: 10,
+      pageSizes: [10, 20, 30, 40]
     };
   },
   methods: {
@@ -244,6 +248,29 @@ export default {
     },
     modifySure: function () {
       var that = this;
+      // debugger
+      // // TODO: fetch 怎么不行？
+      // fetch(`/api/hero/${that.modifyId}`,{
+      //   method: 'PUT',
+      //   body: that.modifyForm,
+      //   emulateJSON: true
+      // })
+      // .then(res =>{
+      //   console.log(res)
+      //   res.json()
+      //   this.modifyFormVisible = false;
+      //   this.$message({
+      //     message: "修改成功",
+      //     type: "success",
+      //     onClose: function () {
+      //       that.getAll();
+      //     }
+      //   });
+      // })
+      // .catch(error =>{
+      //   console.log(error)
+      // })
+      // vue-reouces
       this.$http
         .put(`/api/hero/${this.modifyId}`, this.modifyForm, {
           emulateJSON: true
@@ -277,25 +304,42 @@ export default {
           type: "warning"
         })
         .then(() => {
-          this.$http.delete(`/api/hero/${deleteId}`).then(
-            function (response) {
-              if (response.ok) {
-                this.$message({
-                  type: "success",
-                  message: "删除成功!"
-                });
-                that.getAll();
-              } else {
-                this.$message({
-                  type: "error",
-                  message: "删除失败!"
-                });
-              }
-            },
-            function () {
-              // this.loading = false;
-            }
-          );
+          // TODO: axios 方法
+          axios.delete(`/api/hero/${deleteId}`)
+          .then(res =>{
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+            that.getAll();   
+          })
+          .catch(error =>{
+            this.$message({
+              type: "error",
+              message: "删除失败!"
+            });
+            console.log(error)
+          })
+          // TODO: vue-resource 方法
+          // this.$http.delete(`/api/hero/${deleteId}`).then(
+          //   function (response) {
+          //     if (response.ok) {
+          //       this.$message({
+          //         type: "success",
+          //         message: "删除成功!"
+          //       });
+          //       that.getAll();
+          //     } else {
+          //       this.$message({
+          //         type: "error",
+          //         message: "删除失败!"
+          //       });
+          //     }
+          //   },
+          //   function () {
+          //     // this.loading = false;
+          //   }
+          // );
         })
         .catch(() => {
           this.$message({
@@ -307,16 +351,17 @@ export default {
     // 获取全部数据
     getAll: function () {
       this.loading = true;
-      this.$http.get("/api/hero").then(
-        function (response) {
+      axios.get("/api/hero")
+        .then(res =>{
+          console.log(res)
           this.loading = false;
-          this.tableData = response.body;
-        },
-        function () {
+          this.tableData = res.data;
+          this.dataTotal = res.data.length;
+        })
+        .catch(error =>{
           this.loading = false;
-          console.log("error");
-        }
-      );
+          console.log(error)
+        })
     },
     //跳转至详情页面
     toDetail: function (id) {
@@ -343,28 +388,44 @@ export default {
       var addObj = {
         url: this.addpicform.url
       };
-
-      this.$http.put(`/api/addpic/${this.addpicId}`, addObj).then(
-        function (response) {
-          console.log(response);
-          if (response.ok) {
-            this.addpicVisible = false;
-            this.$notify({
-              title: "成功",
-              message: "添加图片成功",
-              type: "success"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: "添加图片失败"
-            });
-          }
-        },
-        function () {
-          // this.loading = false;
-        }
-      );
+      axios.put(`/api/addpic/${this.addpicId}`,addObj)
+      .then(res =>{
+        this.addpicVisible = false;
+        this.$notify({
+          title: "成功",
+          message: "添加图片成功",
+          type: "success"
+        });
+      })
+      .catch(error =>{
+        this.$notify.error({
+          title: "错误",
+          message: "添加图片失败"
+        });
+        console.log(error)
+      })
+      // TODO: vue-resource 方法
+      // this.$http.put(`/api/addpic/${this.addpicId}`, addObj).then(
+      //   function (response) {
+      //     console.log(response);
+      //     if (response.ok) {
+      //       this.addpicVisible = false;
+      //       this.$notify({
+      //         title: "成功",
+      //         message: "添加图片成功",
+      //         type: "success"
+      //       });
+      //     } else {
+      //       this.$notify.error({
+      //         title: "错误",
+      //         message: "添加图片失败"
+      //       });
+      //     }
+      //   },
+      //   function () {
+      //     // this.loading = false;
+      //   }
+      // );
     }
   },
 
