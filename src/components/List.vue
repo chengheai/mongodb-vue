@@ -187,9 +187,13 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
+      this.pageSize = val
+      this.getAll()
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.currentPage = val
+      this.getAll()
       console.log(`当前页: ${val}`);
     },
     jungleSex: function (sex) {
@@ -351,7 +355,7 @@ export default {
     // 获取全部数据
     getAll: function () {
       this.loading = true;
-      axios.get("/api/hero")
+      axios.get(`/api/hero?currentPage=${this.currentPage}&pageSize=${this.pageSize}`)
         .then(res =>{
           console.log(res)
           this.loading = false;
