@@ -14,6 +14,9 @@
 </template>
 
 <script>
+import { get_hero_detail } from '@/server/api/server';
+// import queryString from 'query-string';
+// console.log('queryString:',queryString)
 export default {
   name: "detail",
   data: function () {
@@ -26,25 +29,24 @@ export default {
   },
   methods: {
     getMessage(id) {
-      this.$http.get(`/api/hero/${id}`).then(
-        function (response) {
-          this.imgArr = response.body.imgArr;
-          this.name = response.body.name;
-          this.flag = response.body.favourite;
-          this.explain = response.body.explain;
-        },
-        function () {
-          //这里面是获取数据失败的情况下
-          // this.loading = false;
-        }
-      );
+      get_hero_detail(id)
+        .then(res => {
+          // console.log(res);
+          this.imgArr = res.data.imgArr;
+          this.name = res.data.name;
+          this.flag = res.data.favourite;
+          this.explain = res.data.explain;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     goback() {
       this.$router.go(-1);
     }
   },
   mounted: function () {
-    console.log(this.$route)
+    // console.log(this.$route)
     this.getMessage(this.$route.params.name);
   }
 };

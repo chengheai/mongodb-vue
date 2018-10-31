@@ -144,10 +144,12 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import { get_heros, put_heros, post_hero, delete_hero, put_add_pic } from "@/server/api/server";
+
 export default {
   name: "list",
-  data: function () {
+  data: function() {
     return {
       tableData: [],
       addFormVisible: false,
@@ -175,28 +177,28 @@ export default {
         dowhat: "",
         favourite: "",
         explain: "",
-        update_at:Date.now
+        update_at: Date.now
       },
       formLabelWidth: "120px",
       loading: false,
       currentPage: 1,
       dataTotal: 0,
-      pageSize: 10,
+      pageSize: 20,
       pageSizes: [10, 20, 30, 40]
     };
   },
   methods: {
     handleSizeChange(val) {
-      this.pageSize = val
-      this.getAll()
+      this.pageSize = val;
+      this.getAll();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.getAll()
+      this.currentPage = val;
+      this.getAll();
       console.log(`当前页: ${val}`);
     },
-    jungleSex: function (sex) {
+    jungleSex: function(sex) {
       if (sex == "man") {
         return "汉子";
       } else if (sex == "woman") {
@@ -205,37 +207,35 @@ export default {
         return "";
       }
     },
-    add: function () {
+    add: function() {
       this.addFormVisible = true;
     },
-    addSure: function () {
+    addSure: function() {
       var that = this;
 
       this.addFormVisible = false;
       //调新增接口,在回调函数中刷新一次
 
       var addObj = this.addForm;
-      console.log(addObj)
-
-      this.$http.post("/api/hero", addObj).then(
-        function (response) {
-          if (response.ok) {
-            this.$message({
-              message: "添加成功",
-              type: "success",
-              onClose: function () {
-                that.getAll();
-              }
-            });
-          }
-        },
-        function () {
-          // this.loading = false;
-        }
-      );
+      console.log(addObj);
+      post_hero(addObj)
+        .then(res => {
+          console.log(res);
+          this.$message({
+            message: "添加成功",
+            type: "success",
+            onClose: function() {
+              that.getAll();
+            }
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
+
     // 关闭dialog的函数
-    closeAdd: function () {
+    closeAdd: function() {
       this.addForm.name = "";
       this.addForm.nickname = "";
       this.addForm.sex = "";
@@ -245,105 +245,57 @@ export default {
       this.addForm.explain = "";
     },
     //修改操作
-    modify: function (row) {
+    modify: function(row) {
       this.modifyFormVisible = true;
       this.modifyForm = Object.assign({}, row);
+      console.log(this.modifyForm);
       this.modifyId = row["_id"];
     },
-    modifySure: function () {
+    modifySure: function() {
       var that = this;
-      // debugger
-      // // TODO: fetch 怎么不行？
-      // fetch(`/api/hero/${that.modifyId}`,{
-      //   method: 'PUT',
-      //   body: that.modifyForm,
-      //   emulateJSON: true
-      // })
-      // .then(res =>{
-      //   console.log(res)
-      //   res.json()
-      //   this.modifyFormVisible = false;
-      //   this.$message({
-      //     message: "修改成功",
-      //     type: "success",
-      //     onClose: function () {
-      //       that.getAll();
-      //     }
-      //   });
-      // })
-      // .catch(error =>{
-      //   console.log(error)
-      // })
-      // vue-reouces
-      this.$http
-        .put(`/api/hero/${this.modifyId}`, this.modifyForm, {
-          emulateJSON: true
-        })
-        .then(
-          function (response) {
-            if (response.ok) {
-              this.modifyFormVisible = false;
-              this.$message({
-                message: "修改成功",
-                type: "success",
-                onClose: function () {
-                  that.getAll();
-                }
-              });
+      put_heros(this.modifyForm)
+        .then(res => {
+          console.log(res);
+          this.modifyFormVisible = false;
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            onClose: function() {
+              that.getAll();
             }
-          },
-          function () {
-            // this.loading = false;
-          }
-        );
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     // 删除操作
-    deleteDate: function (id) {
+    deleteDate: function(id) {
       var that = this;
       var deleteId = id;
 
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
         .then(() => {
           // TODO: axios 方法
-          axios.delete(`/api/hero/${deleteId}`)
-          .then(res =>{
-            this.$message({
-              type: "success",
-              message: "删除成功!"
+          delete_hero(deleteId)
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              that.getAll();
+            })
+            .catch(error => {
+              this.$message({
+                type: "error",
+                message: "删除失败!"
+              });
+              console.log(error);
             });
-            that.getAll();   
-          })
-          .catch(error =>{
-            this.$message({
-              type: "error",
-              message: "删除失败!"
-            });
-            console.log(error)
-          })
-          // TODO: vue-resource 方法
-          // this.$http.delete(`/api/hero/${deleteId}`).then(
-          //   function (response) {
-          //     if (response.ok) {
-          //       this.$message({
-          //         type: "success",
-          //         message: "删除成功!"
-          //       });
-          //       that.getAll();
-          //     } else {
-          //       this.$message({
-          //         type: "error",
-          //         message: "删除失败!"
-          //       });
-          //     }
-          //   },
-          //   function () {
-          //     // this.loading = false;
-          //   }
-          // );
         })
         .catch(() => {
           this.$message({
@@ -353,33 +305,33 @@ export default {
         });
     },
     // 获取全部数据
-    getAll: function () {
+    getAll: function() {
       this.loading = true;
-      axios.get(`/api/hero?currentPage=${this.currentPage}&pageSize=${this.pageSize}`)
-        .then(res =>{
-          console.log(res)
+      get_heros()
+        .then(res => {
+          console.log(res);
           this.loading = false;
           this.tableData = res.data;
           this.dataTotal = res.data.length;
         })
-        .catch(error =>{
+        .catch(error => {
           this.loading = false;
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     //跳转至详情页面
-    toDetail: function (id) {
+    toDetail: function(id) {
       //通过这种方式也可以实现跳转
       this.$router.push(`/league/${id}`);
     },
-    addPic: function (id) {
+    addPic: function(id) {
       this.addpicId = id;
       this.addpicVisible = true;
     },
-    closePicAdd: function () {
+    closePicAdd: function() {
       this.addpicform.url = "";
     },
-    addpicSure: function () {
+    addpicSure: function() {
       //如果没有填入图片地址的话，提示报错
       if (!this.addpicform.url.trim()) {
         this.$notify.error({
@@ -390,51 +342,30 @@ export default {
       }
 
       var addObj = {
-        url: this.addpicform.url
+        url: this.addpicform.url,
+        id: this.addpicId
       };
-      axios.put(`/api/addpic/${this.addpicId}`,addObj)
-      .then(res =>{
-        this.addpicVisible = false;
-        this.$notify({
-          title: "成功",
-          message: "添加图片成功",
-          type: "success"
+      put_add_pic(addObj)
+        .then(res => {
+          this.addpicVisible = false;
+          this.$notify({
+            title: "成功",
+            message: "添加图片成功",
+            type: "success"
+          });
+        })
+        .catch(error => {
+          this.$notify.error({
+            title: "错误",
+            message: "添加图片失败"
+          });
+          console.log(error);
         });
-      })
-      .catch(error =>{
-        this.$notify.error({
-          title: "错误",
-          message: "添加图片失败"
-        });
-        console.log(error)
-      })
-      // TODO: vue-resource 方法
-      // this.$http.put(`/api/addpic/${this.addpicId}`, addObj).then(
-      //   function (response) {
-      //     console.log(response);
-      //     if (response.ok) {
-      //       this.addpicVisible = false;
-      //       this.$notify({
-      //         title: "成功",
-      //         message: "添加图片成功",
-      //         type: "success"
-      //       });
-      //     } else {
-      //       this.$notify.error({
-      //         title: "错误",
-      //         message: "添加图片失败"
-      //       });
-      //     }
-      //   },
-      //   function () {
-      //     // this.loading = false;
-      //   }
-      // );
     }
   },
 
   //页面初始化进来查询数据
-  mounted: function () {
+  mounted: function() {
     this.getAll();
   }
 };
@@ -444,10 +375,10 @@ export default {
 .tableHeader {
   color: #000;
 }
-.my-pagination{
+.my-pagination {
   text-align: center;
 }
-.table-handle{
+.table-handle {
   display: flex;
   justify-content: flex-end;
 }

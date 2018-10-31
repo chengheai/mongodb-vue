@@ -8,10 +8,10 @@ const Hero = require("../models/heroSchema");
 
 // 查询所有英雄信息路由
 router.get("/hero", (req, res) => {
-  console.log('========',req.query.pageSize)
+  // console.log('========',req.query.pageSize)
   Hero.find({})
-    .limit(Math.min(parseInt(req.query.pageSize) || 10, 100))
-    .skip(parseInt(req.query.currentPage) || 0)
+    // .limit(Math.min(parseInt(req.query.pageSize) || 10, 100))
+    // .skip(parseInt(req.query.currentPage) || 0)
     .sort({ update_at: -1 })
     .then(heros => {
       res.json(heros);
