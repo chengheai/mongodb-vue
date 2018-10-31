@@ -5,7 +5,7 @@
 ## Build Setup
 
 ## preview
-[](https://github.com/chengheai/review-demo-image/blob/master/8uHDTt7UDw.gif)
+![](https://github.com/chengheai/review-demo-image/blob/master/8uHDTt7UDw.gif)
 ``` bash
 # install dependencies
 npm install
