@@ -307,7 +307,11 @@ export default {
     // 获取全部数据
     getAll: function() {
       this.loading = true;
-      get_heros()
+      let query = {
+        pageSize: this.pageSize,
+        currentPage: this.currentPage
+      }
+      get_heros(query)
         .then(res => {
           console.log(res);
           this.loading = false;
