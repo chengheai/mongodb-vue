@@ -40,7 +40,7 @@
     :page-sizes="pageSizes"
     :page-size="pageSize"
     layout="total, sizes, prev, pager, next, jumper"
-    :total="dataTotal">
+    :total="12">
   </el-pagination>
 
   <!-- 新增数据 -->
