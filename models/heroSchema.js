@@ -11,7 +11,7 @@ const heroSchema = mongoose.Schema({
   explain:String,
   created_at : { type : Date, default : Date.now },
   update_at : { type : Date, default : Date.now }
-}, { collection: 'myhero'})
+}, { collection: 'myhero', timestamps: true})
 //这里mongoose.Schema要写上第二个参数，明确指定到数据库中的哪个表取数据
 
 

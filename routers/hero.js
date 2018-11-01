@@ -12,7 +12,7 @@ router.get("/hero", (req, res) => {
   Hero.find({})
     // .limit(Math.min(parseInt(req.query.pageSize) || 10, 100))
     // .skip(parseInt(req.query.currentPage) || 0)
-    .sort({ update_at: -1 })
+    .sort({ updatedAt: -1 })
     .then(heros => {
       res.json(heros);
     })

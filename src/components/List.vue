@@ -183,7 +183,7 @@ export default {
       loading: false,
       currentPage: 1,
       dataTotal: 0,
-      pageSize: 20,
+      pageSize: 10,
       pageSizes: [10, 20, 30, 40]
     };
   },
