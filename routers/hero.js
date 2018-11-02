@@ -10,16 +10,24 @@ const Hero = require("../models/heroSchema");
 router.get("/hero", (req, res) => {
   // console.log('========',req.query.pageSize)
   // console.log('+++++++++++++',Hero.count())
+  var total = 0;
+  Hero.count({}, function(err, count){
+    if(err) return;
+    total = count;
+    res.set('x-header', total)
+  })
+
   Hero.find({})
     .limit(Math.min(parseInt(req.query.pageSize) || 10, 100))
-    .skip(parseInt(req.query.currentPage -1) * req.query.pageSize)
+    .skip(parseInt(req.query.currentPage -1) * req.query.pageSize || 0)
     .sort({ updatedAt: -1 })
     .then(heros => {
       res.json(heros);
     })
     .catch(err => {
       res.json(err);
-    });
+    })
+
 });
 
 // 通过ObjectId查询单个英雄信息路由
@@ -90,7 +98,7 @@ router.delete("/hero/:id", (req, res) => {
   Hero.findOneAndRemove({
     _id: req.params.id
   })
-    .then(hero => res.send(`${hero.title}删除成功`))
+    .then(hero => res.send(`${hero.name}删除成功`))
     .catch(err => res.json(err));
 });
 

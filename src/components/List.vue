@@ -40,7 +40,7 @@
     :page-sizes="pageSizes"
     :page-size="pageSize"
     layout="total, sizes, prev, pager, next, jumper"
-    :total="12">
+    :total="dataTotal">
   </el-pagination>
 
   <!-- 新增数据 -->
@@ -283,6 +283,7 @@ export default {
           // TODO: axios 方法
           delete_hero(deleteId)
             .then(res => {
+              console.log('res:',res)
               this.$message({
                 type: "success",
                 message: "删除成功!"
@@ -316,12 +317,14 @@ export default {
           console.log(res);
           this.loading = false;
           this.tableData = res.data;
-          this.dataTotal = res.data.length;
+          this.dataTotal = parseInt(res.headers['x-header']);
+          // console.log(res.headers['x-header'])
         })
         .catch(error => {
           this.loading = false;
           console.log(error);
         });
+
     },
     //跳转至详情页面
     toDetail: function(id) {
@@ -380,6 +383,7 @@ export default {
   color: #000;
 }
 .my-pagination {
+  margin-top: 5px;
   text-align: center;
 }
 .table-handle {
