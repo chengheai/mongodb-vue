@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="list">
+<div class="list" style='margin-top:10px;'>
   <el-row class='table-handle'>
     <el-button type="primary" class="addBtn" @click="add" icon="el-icon-plus">添加</el-button>
   </el-row>  
