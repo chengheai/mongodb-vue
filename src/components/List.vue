@@ -2,7 +2,7 @@
 <div class="list" style='margin-top:10px;'>
   <el-row class='table-handle'>
     <el-button type="primary" class="addBtn" @click="add" icon="el-icon-plus">添加</el-button>
-  </el-row>  
+  </el-row>
   <el-table :data="tableData" stripe element-loading-text="拼命加载中" header-row-class-name="tableHeader" v-loading.fullscreen.lock="loading" empty-text="亲，暂时没有数据哦" style="width: 100%">
     <el-table-column fixed prop="nickname" label="英雄" align="center">
     </el-table-column>
@@ -313,7 +313,7 @@ export default {
         currentPage: this.currentPage
       }
       get_heros(query)
-        .then(res => {
+        .then((res) => {
           console.log(res);
           this.loading = false;
           this.tableData = res.data;
