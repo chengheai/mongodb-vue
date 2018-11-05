@@ -40,8 +40,8 @@ export default {
     };
     return {
       loginForm: {
-        userName: '',
-        password: ''
+        userName: 'admin',
+        password: 'admin'
       },
       rules: {
         userName: [{
