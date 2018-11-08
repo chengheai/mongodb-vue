@@ -14,40 +14,40 @@
 </template>
 
 <script>
-import { get_hero_detail } from '@/server/api/server';
+import { get_hero_detail } from '@/server/api/server'
 // import queryString from 'query-string';
 // console.log('queryString:',queryString)
 export default {
-  name: "detail",
+  name: 'detail',
   data: function () {
     return {
       imgArr: [],
-      name: "",
-      flag: "",
-      explain: ""
-    };
+      name: '',
+      flag: '',
+      explain: ''
+    }
   },
   methods: {
-    getMessage(id) {
+    getMessage (id) {
       get_hero_detail(id)
         .then(res => {
           // console.log(res);
-          this.imgArr = res.data.imgArr;
-          this.name = res.data.name;
-          this.flag = res.data.favourite;
-          this.explain = res.data.explain;
+          this.imgArr = res.data.imgArr
+          this.name = res.data.name
+          this.flag = res.data.favourite
+          this.explain = res.data.explain
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     },
-    goback() {
-      this.$router.go(-1);
+    goback () {
+      this.$router.go(-1)
     }
   },
   mounted: function () {
     // console.log(this.$route)
-    this.getMessage(this.$route.params.name);
+    this.getMessage(this.$route.params.name)
   }
 };
 </script>

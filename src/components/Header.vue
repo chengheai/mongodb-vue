@@ -5,9 +5,8 @@
         <div class="navbar-header pull-left  hidden-xs hidden-sm">
           <a class="navbar-brand no-padding">
             <!--<i class="navbar-logo pull-left"></i>-->
-            <span class="navbar-title pull-left logo">
-					  LOGO
-          </span>
+            <span class="navbar-title pull-left logo">LOGO
+            </span>
           </a>
         </div>
       </el-col>
@@ -20,19 +19,19 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        activeIndex2: '0'
-      };
-    },
-    methods: {
-      logout(){
-        console.log(1)
-        this.$router.push('/')
-      }
+export default {
+  data () {
+    return {
+      activeIndex2: '0'
+    }
+  },
+  methods: {
+    logout () {
+      console.log(1)
+      this.$router.push('/')
     }
   }
+}
 </script>
 <style>
   .el-header {
@@ -54,4 +53,3 @@
     cursor: pointer;
   }
 </style>
-

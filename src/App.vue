@@ -13,9 +13,9 @@ export default {
   components: {
     appHeader: Header
   },
-  data:function(){
+  data: function () {
     return {
-      title: "LOL英雄"
+      title: 'LOL英雄'
     }
   }
 }

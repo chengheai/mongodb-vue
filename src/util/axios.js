@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // axios 配置
 var instance = axios.create({
-  baseURL: 'http://144.34.148.126:3000',
+  baseURL: 'http://localhost:8080',
   timeout: 5000
 })
 
@@ -25,7 +25,7 @@ instance.interceptors.request.use(config => {
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
   // 对响应数据做点什么
-  const res = response.data
+  // const res = response.data
   // 对错误代码做处理
   return response
 }, error => {

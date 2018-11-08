@@ -2,7 +2,7 @@
 <div class="list" style='margin-top:10px;'>
   <el-row class='table-handle'>
     <el-button type="primary" class="addBtn" @click="add" icon="el-icon-plus">添加</el-button>
-  </el-row>  
+  </el-row>
   <el-table :data="tableData" stripe element-loading-text="拼命加载中" header-row-class-name="tableHeader" v-loading.fullscreen.lock="loading" empty-text="亲，暂时没有数据哦" style="width: 100%">
     <el-table-column fixed prop="nickname" label="英雄" align="center">
     </el-table-column>
@@ -144,42 +144,41 @@
 </template>
 
 <script>
-import axios from "axios";
-import { get_heros, put_heros, post_hero, delete_hero, put_add_pic } from "@/server/api/server";
+import { get_heros, put_heros, post_hero, delete_hero, put_add_pic } from '@/server/api/server'
 
 export default {
-  name: "list",
-  data: function() {
+  name: 'list',
+  data: function () {
     return {
       tableData: [],
       addFormVisible: false,
       modifyFormVisible: false,
       addpicVisible: false,
-      modifyId: "",
-      addpicId: "",
+      modifyId: '',
+      addpicId: '',
       addpicform: {
-        url: ""
+        url: ''
       },
       addForm: {
-        name: "",
-        nickname: "",
-        sex: "",
-        address: "",
-        dowhat: "",
-        favourite: "",
-        explain: ""
+        name: '',
+        nickname: '',
+        sex: '',
+        address: '',
+        dowhat: '',
+        favourite: '',
+        explain: ''
       },
       modifyForm: {
-        name: "",
-        nickname: "",
-        sex: "",
-        address: "",
-        dowhat: "",
-        favourite: "",
-        explain: "",
+        name: '',
+        nickname: '',
+        sex: '',
+        address: '',
+        dowhat: '',
+        favourite: '',
+        explain: '',
         update_at: Date.now
       },
-      formLabelWidth: "120px",
+      formLabelWidth: '120px',
       loading: false,
       currentPage: 1,
       dataTotal: 0,
@@ -189,84 +188,83 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
-      this.pageSize = val;
-      this.getAll();
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val
+      this.getAll()
+      console.log(`每页 ${val} 条`)
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.getAll();
-      console.log(`当前页: ${val}`);
+      this.currentPage = val
+      this.getAll()
+      console.log(`当前页: ${val}`)
     },
     jungleSex: function(sex) {
-      if (sex == "man") {
-        return "汉子";
-      } else if (sex == "woman") {
-        return "妹子";
+      if (sex == 'man') {
+        return '汉子';
+      } else if (sex == 'woman') {
+        return '妹子';
       } else {
-        return "";
+        return ''
       }
     },
     add: function() {
-      this.addFormVisible = true;
+      this.addFormVisible = true
     },
     addSure: function() {
       var that = this;
 
-      this.addFormVisible = false;
-      //调新增接口,在回调函数中刷新一次
-
-      var addObj = this.addForm;
-      console.log(addObj);
+      this.addFormVisible = false
+      // 调新增接口,在回调函数中刷新一次
+      var addObj = this.addForm
+      console.log(addObj)
       post_hero(addObj)
         .then(res => {
-          console.log(res);
+          console.log(res)
           this.$message({
-            message: "添加成功",
-            type: "success",
+            message: '添加成功',
+            type: 'success',
             onClose: function() {
-              that.getAll();
+              that.getAll()
             }
           });
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         });
     },
 
     // 关闭dialog的函数
     closeAdd: function() {
-      this.addForm.name = "";
-      this.addForm.nickname = "";
-      this.addForm.sex = "";
-      this.addForm.address = "";
-      this.addForm.dowhat = "";
-      this.addForm.name = "";
-      this.addForm.explain = "";
+      this.addForm.name = '';
+      this.addForm.nickname = '';
+      this.addForm.sex = '';
+      this.addForm.address = '';
+      this.addForm.dowhat = '';
+      this.addForm.name = '';
+      this.addForm.explain = '';
     },
-    //修改操作
+    // 修改操作
     modify: function(row) {
-      this.modifyFormVisible = true;
-      this.modifyForm = Object.assign({}, row);
-      console.log(this.modifyForm);
-      this.modifyId = row["_id"];
+      this.modifyFormVisible = true
+      this.modifyForm = Object.assign({}, row)
+      console.log(this.modifyForm)
+      this.modifyId = row['_id']
     },
     modifySure: function() {
       var that = this;
       put_heros(this.modifyForm)
         .then(res => {
           console.log(res);
-          this.modifyFormVisible = false;
+          this.modifyFormVisible = false
           this.$message({
-            message: "修改成功",
-            type: "success",
+            message: '修改成功',
+            type: '修改成功',
             onClose: function() {
-              that.getAll();
+              that.getAll()
             }
           });
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         });
     },
     // 删除操作
@@ -274,34 +272,34 @@ export default {
       var that = this;
       var deleteId = id;
 
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           // TODO: axios 方法
           delete_hero(deleteId)
             .then(res => {
-              console.log('res:',res)
+              console.log('res:', res)
               this.$message({
-                type: "success",
-                message: "删除成功!"
+                type: 'success',
+                message: '删除成功!'
               });
               that.getAll();
             })
             .catch(error => {
               this.$message({
-                type: "error",
-                message: "删除失败!"
+                type: 'error',
+                message: '删除失败!'
               });
               console.log(error);
             });
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除"
+            type: 'info',
+            message: '已取消删除'
           });
         });
     },
@@ -324,11 +322,10 @@ export default {
           this.loading = false;
           console.log(error);
         });
-
     },
-    //跳转至详情页面
+    // 跳转至详情页面
     toDetail: function(id) {
-      //通过这种方式也可以实现跳转
+      // 通过这种方式也可以实现跳转
       this.$router.push(`/league/${id}`);
     },
     addPic: function(id) {
@@ -336,14 +333,14 @@ export default {
       this.addpicVisible = true;
     },
     closePicAdd: function() {
-      this.addpicform.url = "";
+      this.addpicform.url = '';
     },
     addpicSure: function() {
-      //如果没有填入图片地址的话，提示报错
+      // 如果没有填入图片地址的话，提示报错
       if (!this.addpicform.url.trim()) {
         this.$notify.error({
-          title: "错误",
-          message: "请输入正确的图片地址"
+          title: '错误',
+          message: '请输入正确的图片地址'
         });
         return;
       }
@@ -356,22 +353,22 @@ export default {
         .then(res => {
           this.addpicVisible = false;
           this.$notify({
-            title: "成功",
-            message: "添加图片成功",
-            type: "success"
+            title: '成功',
+            message: '添加图片成功',
+            type: 'success'
           });
         })
         .catch(error => {
           this.$notify.error({
-            title: "错误",
-            message: "添加图片失败"
+            title: '错误',
+            message: '添加图片失败'
           });
           console.log(error);
         });
     }
   },
 
-  //页面初始化进来查询数据
+  // 页面初始化进来查询数据
   mounted: function() {
     this.getAll();
   }

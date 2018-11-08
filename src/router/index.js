@@ -8,8 +8,8 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path : '/',
-      redirect : "/login"
+      path: '/',
+      redirect: '/login'
     },
     {
       path: '/login',
@@ -22,9 +22,9 @@ export default new Router({
       component: List
     },
     {
-      path : '/league/:name',
-      name : 'Detail',
-      component : Detail
-    },
+      path: '/league/:name',
+      name: 'Detail',
+      component: Detail
+    }
   ]
 })

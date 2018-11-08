@@ -6,14 +6,14 @@ import router from './router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
 
-//引入element组件化框架
-import ElementUI from "element-ui"
-//引入样式文件
+// 引入element组件化框架
+import ElementUI from 'element-ui'
+// 引入样式文件
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 Vue.prototype.http = axios
 
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 Vue.use(VueResource)
 
 /* eslint-disable no-new */

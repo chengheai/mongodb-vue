@@ -17,27 +17,28 @@
 
 <script>
 export default {
-  data() {
+  data () {
     var validateUserName = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入账号'));
+        callback(new Error('请输入账号'))
       } else {
         if (this.loginForm.userName !== '') {
           // this.$refs.loginForm.validateField('userName');
         }
-        callback();
+        callback()
       }
-    };
+    }
     var validatePassword = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('请输入密码'))
       } else {
         if (this.loginForm.password !== '') {
           // this.$refs.loginForm.validateField('password');
         }
-        callback();
+        callback()
       }
-    };
+    }
+
     return {
       loginForm: {
         userName: 'admin',
@@ -53,20 +54,20 @@ export default {
           trigger: 'blur'
         }]
       }
-    };
+    }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log(this.loginForm.userName)
           console.log(this.loginForm.password)
           this.$router.push('/list')
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   }
 }
