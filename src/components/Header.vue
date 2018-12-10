@@ -10,10 +10,18 @@
           </a>
         </div>
       </el-col>
-      <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" id="logout" class="fontSize" @click.native="logout">
-        退出
-        <i class="el-icon-setting"></i>
+      <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" id="logout" class="fontSize" >
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            {{user}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="logout"><i class="el-icon-menu" style="margin-right: 5px"></i>退出</el-dropdown-item>
+            <el-dropdown-item><i class="el-icon-star-on" style="margin-right: 5px"></i><a class="a-new" style="color: '#111'; text-decoration: none" target="_blank" href="https://github.com/chengheai/mongodb-vue">github</a></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-col>
+
     </el-row>
   </el-header>
 </template>
@@ -22,8 +30,12 @@
 export default {
   data () {
     return {
-      activeIndex2: '0'
+      activeIndex2: '0',
+      user: ''
     }
+  },
+  mounted() {
+    this.user = localStorage.getItem('guest');
   },
   methods: {
     logout () {
@@ -51,5 +63,12 @@ export default {
     color: #fff;
     float: right;
     cursor: pointer;
+  }
+  .el-dropdown-link{
+    font-size: 18px;
+    color: #fff;
+  }
+  .a-new:hover, .a-new:focus, .a-new:visited {
+    color: #111;
   }
 </style>

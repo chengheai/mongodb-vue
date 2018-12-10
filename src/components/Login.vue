@@ -41,8 +41,8 @@ export default {
 
     return {
       loginForm: {
-        userName: 'admin',
-        password: 'admin'
+        userName: 'guest',
+        password: 'guest'
       },
       rules: {
         userName: [{
@@ -62,6 +62,7 @@ export default {
         if (valid) {
           console.log(this.loginForm.userName)
           console.log(this.loginForm.password)
+          localStorage.setItem('guest', this.loginForm.userName)
           this.$router.push('/list')
         } else {
           console.log('error submit!!')
