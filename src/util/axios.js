@@ -3,9 +3,9 @@ import axios from 'axios'
 // axios 配置
 var instance = axios.create({
   // 本地测试地址：
-  baseURL: 'http://localhost:12000',
+  // baseURL: 'http://localhost:12000',
   // 线上地址：
-  // baseURL: 'http://144.34.148.126:3000',
+  baseURL: 'http://144.34.148.126:3000',
   timeout: 5000
 })
 

@@ -35,14 +35,18 @@ router.post('/api/user/register', (req, res) => {
 });
 //登录接口
 router.post('/api/user/login', (req, res) => {
-  User.find({ name: req.body.name, password: req.body.password }, (err, data) => {
+  User.find({ userName: req.body.userName }, (err, data) => {
     if (err) {
       // res.send(err);
       res.send({ status: 1002, message: '查询数据库失败!', data: err });
     } else {
-      console.log(data);
+      console.log('data: ', data);
       if (data.length > 0) {
-        res.send({ status: 1000, message: '登录成功!', data: data });
+        if(data[0].password === req.body.password) {
+          res.send({ status: 1000, message: '登录成功!', data: data })
+        } else {
+          res.send({ status: 1001, message: '密码错误!', data: err });
+        }
       } else {
         res.send({ status: 1001, message: '登录失败，该用户没有注册!', data: err });
       }
