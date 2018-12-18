@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
-
+// import { store } from './store'
 // 引入element组件化框架
 import ElementUI from 'element-ui'
 // 引入样式文件
@@ -20,6 +20,7 @@ Vue.use(VueResource)
 new Vue({
   el: '#app',
   router,
+  // store,
   components: { App },
   template: '<App/>'
 })

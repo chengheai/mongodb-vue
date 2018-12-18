@@ -1,5 +1,6 @@
 const express = require('express');
 const hero = require('./routers/hero')
+const user = require('./routers/user')
 const mongoose = require("mongoose");
 const path = require('path')
 const fs = require('fs')
@@ -18,7 +19,8 @@ const bodyParser = require("body-parser")
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/api',hero)
+app.use('/api', hero)
+app.use(user)
 app.use(express.static(path.resolve(__dirname, './dist')))
 // 首页静态页面
 app.get('*', function(req, res) {

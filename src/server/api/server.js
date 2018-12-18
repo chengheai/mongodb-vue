@@ -1,5 +1,15 @@
 import axios from '../../util/axios'
 
+// 注册
+export async function post_register(params) {
+  return axios.post(`/api/user/register`, params);
+}
+
+// 登录
+export async function post_login(params) {
+  return axios.post(`/api/user/login`, params);
+}
+
 // 获取英雄列表
 export async function get_heros(params) {
   return axios.get('/api/hero', { params });

@@ -35,11 +35,12 @@ export default {
     }
   },
   mounted() {
-    this.user = localStorage.getItem('guest');
+    this.user = sessionStorage.getItem('gue');
   },
   methods: {
     logout () {
       console.log(1)
+      sessionStorage.clear()
       this.$router.push('/')
     }
   }
