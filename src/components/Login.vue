@@ -101,14 +101,14 @@ export default {
                   message: res.data.message,
                   type: 'success'
                 });
-                this.$store.dispatch('setUser',this.loginForm.userName);
+                this.$store.dispatch('setUser', this.loginForm.userName);
                 this.$router.push('/list');
               } else {
                 this.$message({
                   message: res.data.message,
                   type: 'warning'
                 });
-                this.$store.dispatch('setUser',null)
+                this.$store.dispatch('setUser', null)
               }
             });
           }
