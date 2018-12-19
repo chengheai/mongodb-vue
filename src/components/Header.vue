@@ -9,10 +9,10 @@
           </a>
         </div>
       </el-col>
-      <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" id="logout" class="fontSize">
+      <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" id="logout" class="fontSize" v-show="isLogin">
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{currentUser || '未登录'}}
+            {{currentUser}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
