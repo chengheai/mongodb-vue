@@ -126,14 +126,21 @@ export default {
 .login-box {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
+  background: url('../assets/bg.jpg') no-repeat;
+  background-size: cover;
   position: relative;
-  background: #fff;
+  box-sizing: border-box;
+  // background: #fff;
   .el-form {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
-    width: 350px;
+    width: 300px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    padding: 25px 15px 5px 15px;
+    background: darkgray;
     .login-btn {
       width: 100%;
     }
