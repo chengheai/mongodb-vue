@@ -5,7 +5,8 @@
 ## Build Setup
 
 ## preview
-![](https://github.com/chengheai/review-demo-image/blob/master/2018-12-20 14-28-16.2018-12-20 14_33_17.gif)
+
+![](https://github.com/chengheai/review-demo-image/blob/master/2018-12-20%2014-28-16.2018-12-20%2014_33_17.gif)
 ![](https://github.com/chengheai/review-demo-image/blob/master/8uHDTt7UDw.gif)
 ``` bash
 # install dependencies

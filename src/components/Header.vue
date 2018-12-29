@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     logout() {
+      console.log('this.$router: ', this.$route);
       console.log(1);
       this.$router.push('/');
       this.$store.dispatch('setUser', null);
