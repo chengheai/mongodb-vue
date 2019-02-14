@@ -34,7 +34,7 @@ app.all('*', function(req, res, next) {
     next();
 });
 // 监听80端口
-app.listen(3000);
-console.log('server is running 3000');
+app.listen(12000);
+console.log('server is running 12000');
 
 
