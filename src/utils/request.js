@@ -1,11 +1,7 @@
 import axios from 'axios'
 // axios 配置
-var instance = axios.create({
-  // 本地测试地址：
-  // baseURL: 'http://localhost:12000',
-  baseURL: process.env.NODE_ENV.baseURL,
-  // 线上地址：
-  // baseURL: 'http://144.34.160.26:3000',
+const instance = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000
 })
 
@@ -45,7 +41,7 @@ export default instance
  * @param data
  * @returns {Promise}
  */
-export function post (url, data = {}) {
+export function post(url, data = {}) {
   return new Promise((resolve, reject) => {
     instance.post(url, data).then(response => {
       resolve(response.data)

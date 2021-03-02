@@ -10,7 +10,8 @@ const Hero = require('../models/heroSchema');
 router.get('/hero', (req, res) => {
   // console.log('========',req.query.pageSize)
   // console.log('+++++++++++++',Hero.count())
-  var total = 0;
+  let total = 0;
+
   Hero.count({}, function(err, count) {
     if (err) return;
     total = count;

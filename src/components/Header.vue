@@ -9,18 +9,27 @@
           </a>
         </div>
       </el-col>
-      <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" id="logout" class="fontSize" v-show="isLogin">
+      <el-col
+        v-show="isLogin"
+        id="logout"
+        :xs="2"
+        :sm="2"
+        :md="2"
+        :lg="2"
+        :xl="2"
+        class="fontSize"
+      >
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{currentUser}}
-            <i class="el-icon-arrow-down el-icon--right"></i>
+            {{ currentUser }}
+            <i class="el-icon-arrow-down el-icon--right" />
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="logout">
-              <i class="el-icon-menu" style="margin-right: 5px"></i>退出
+              <i class="el-icon-menu" style="margin-right: 5px" />退出
             </el-dropdown-item>
             <el-dropdown-item>
-              <i class="el-icon-star-on" style="margin-right: 5px"></i>
+              <i class="el-icon-star-on" style="margin-right: 5px" />
               <a
                 class="a-new"
                 style="color: '#111'; text-decoration: none"
@@ -39,8 +48,8 @@
 export default {
   data() {
     return {
-      activeIndex2: '0',
-      user: ''
+      activeIndex2: "0",
+      user: ""
     };
   },
   computed: {
@@ -53,15 +62,15 @@ export default {
   },
   methods: {
     logout() {
-      console.log('this.$router: ', this.$route);
+      console.log("this.$router: ", this.$route);
       console.log(1);
-      this.$router.push('/');
-      this.$store.dispatch('setUser', null);
+      this.$router.push("/");
+      this.$store.dispatch("setUser", null);
     }
   }
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .el-header {
   background-color: #409eff;
   color: #333;

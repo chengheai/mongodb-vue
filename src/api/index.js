@@ -1,4 +1,4 @@
-import axios from '../../util/axios'
+import axios from "@/utils/request.js";
 
 // 注册
 export async function post_register(params) {
@@ -12,7 +12,7 @@ export async function post_login(params) {
 
 // 获取英雄列表
 export async function get_heros(params) {
-  return axios.get('/api/hero', { params });
+  return axios.get("/api/hero", { params });
 }
 
 // 编辑英雄信息
@@ -27,15 +27,15 @@ export async function post_hero(params) {
 
 // 删除英雄
 export async function delete_hero(params) {
-  return axios.delete(`/api/hero/${params}`, params)
+  return axios.delete(`/api/hero/${params}`, params);
 }
 
 // 英雄添加图片
 export async function put_add_pic(params) {
-  return axios.put(`/api/addpic/${params.id}`, params)
+  return axios.put(`/api/addpic/${params.id}`, params);
 }
 
 // 获取单个英雄详情
 export async function get_hero_detail(params) {
-  return axios.get(`/api/hero/${params}`, params)
+  return axios.get(`/api/hero/${params}`);
 }

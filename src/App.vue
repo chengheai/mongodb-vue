@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <app-header />
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   components: {
     appHeader: Header
   },
-  data: function () {
+  data: function() {
     return {
       title: 'LOL英雄'
     }

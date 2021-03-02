@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 // 引入数据模型模块
 const User = require('../models/User');
+
 router.post('/user/register', (req, res) => {
   // 这里的req.body 其实使用了body-parser中间件 用来对前端发送来的数据进行解析
   // 查询数据库中name= req.body.name 的数据
@@ -17,10 +18,11 @@ router.post('/user/register', (req, res) => {
       if (data.length > 0) {
         res.send({ status: 1001, message: '该用户名已经注册！' });
       } else {
-        let newName = new User({
+        const newName = new User({
           userName: req.body.userName,
           password: req.body.password
         });
+
         // newName.save 往数据库中插入数据
         newName.save((err, data) => {
           if (err) {
