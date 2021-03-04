@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 // 这一句是连接上数据库
-mongoose.connect("mongodb://172.21.15.44:27017/lolTest", {
+mongoose.connect("mongodb://localhost:27017/lolTest", {
   useNewUrlParser: true
 });
 
