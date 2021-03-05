@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "sse-vue",
+      "script": "/root/code/sse-vue-demo/server/index.js",
+    },
+    {
+      "name": "mongo-vue",
+      "script": "/root/code/mongodb-vue/server/index.js",
+    }
+  ]
+}
