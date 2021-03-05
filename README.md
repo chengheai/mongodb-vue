@@ -1,7 +1,16 @@
 # mongodb-vue
 
 > A Vue.js project
-
+## 跨域处理
+谷歌浏览器安装 Allow CORS: Access-Control-Allow-Origin
+## 测试数据
+``` shell
+data.json
+```
+## 导入数据
+``` shell
+mongoimport -d lolTest -c myhero --file /Users/xxx/Desktop/a.json  --type json
+```
 ## Build Setup
 
 ## preview
